@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 module.exports = function( sequelize ) {
 
     var Model = sequelize.define(
-        'site',
+        'sites',
         {
             idServices :{
                 type: Sequelize.INTEGER,
@@ -13,7 +13,11 @@ module.exports = function( sequelize ) {
             title : Sequelize.STRING,
             url :Sequelize.STRING,
             interval : Sequelize.INTEGER
+        },
+        {
+            timestamps: false
         }
     );
+    sequelize.sync();
     return Model;
 };

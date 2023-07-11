@@ -10,7 +10,7 @@ dbConnection.authenticate().then(() => {
   console.log('Failed to connect to DB');
 });
 
-const site = require('../models/site');
+const site = require('../models/sites');
 
 var dbSite = site(dbConnection);
 
