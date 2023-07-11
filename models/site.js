@@ -11,8 +11,8 @@ module.exports = function( sequelize ) {
                 primaryKey: true
             },
             title : Sequelize.STRING,
-            description :Sequelize.TEXT,
             url :Sequelize.STRING,
+            interval : Sequelize.INTEGER
         }
     );
     return Model;
