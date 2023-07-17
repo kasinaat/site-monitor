@@ -5,7 +5,7 @@ module.exports = function( sequelize ) {
     var Model = sequelize.define(
         'sites',
         {
-            idServices :{
+            siteId :{
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true

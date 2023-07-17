@@ -2,18 +2,17 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
+var loggers = require("./utils/logger-util");
 var indexRouter = require('./routes/index');
 var sitesRouter = require('./routes/sites');
 
 var app = express();
-
+loggers.initLoggers();
+loggers.getLogger('general').info("Loggers initiated successfully");
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
