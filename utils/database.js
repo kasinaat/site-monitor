@@ -1,14 +1,16 @@
 const Sequelize = require('sequelize');
 
+const logger = require('./logger-util');
+
 const dbConnection = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite',
 });
 
 dbConnection.authenticate().then(() => {
-  console.log('Connection has been established');
+  logger.getLogger('general').info('Connection has been established');
 }).catch(() => {
-  console.log('Failed to connect to DB');
+  logger.getLogger('general').info('Failed to connect to DB');
 });
 
 const site = require('../models/sites');
