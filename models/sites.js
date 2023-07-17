@@ -1,18 +1,21 @@
 const { Sequelize } = require("sequelize");
 
-module.exports = function( sequelize ) {
+module.exports = function (sequelize) {
 
     var Model = sequelize.define(
         'sites',
         {
-            siteId :{
+            siteId: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true
             },
-            title : Sequelize.STRING,
-            url :Sequelize.STRING,
-            interval : Sequelize.INTEGER
+            title: {
+                type: Sequelize.STRING,
+                unique: true
+            },
+            url: Sequelize.STRING,
+            interval: Sequelize.INTEGER
         },
         {
             timestamps: false

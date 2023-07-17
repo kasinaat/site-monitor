@@ -6,14 +6,29 @@ function create(request, response, next) {
     let title = request.body.title;
     let url = request.body.url;
     let interval = request.body.interval;
-    site.create({
-        title : title,
-        url: url,
-        interval : interval
-    }).then(result => {
-        logger.getLogger('general').info(`New Site monitoring created. Title: ${title}, Interval: ${interval}`);
-        response.send("Monitoring for Site Created successfully");
+
+    site.findAll({
+        where : {
+            title: title
+        }
+    }).then(sites => {
+        console.log(sites)
+        if(sites.length > 0) {
+            logger.getLogger('general').info(`A Site with title ${title} is already present`);
+            response.status(400).json({ error: `A Site with title ${title} is already present`})
+        } else {
+            site.create({
+                title : title,
+                url: url,
+                interval : interval
+            }).then(result => {
+                logger.getLogger('general').info(`New Site monitoring created. Title: ${title}, Interval: ${interval}`);
+                response.send({success: true, message: "Monitoring for Site Created successfully"});
+            });
+        }
     });
+
+   
     
 }
 
