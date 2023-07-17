@@ -1,24 +1,27 @@
+/* eslint-disable indent */
 const winston = require('winston');
-var general;
+
+let general;
 function initLoggers() {
     general = winston.createLogger({
-        level: "info",
+        level: 'info',
         format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.printf(
-                (info) => `${info.timestamp} ${info.level}: ${info.message}`
-            )
+                (info) => `${info.timestamp} ${info.level}: ${info.message}`,
+            ),
         ),
         transports: [
             new winston.transports.Console(),
-            new winston.transports.File({ filename: "logs/general.log" }),
+            new winston.transports.File({ filename: 'logs/general.log' }),
         ],
     });
 }
 function getLogger(loggerName) {
-    if(loggerName == "general") {
+    if (loggerName === 'general') {
         return general;
     }
+    return undefined;
 }
 
 module.exports.initLoggers = initLoggers;

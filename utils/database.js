@@ -1,19 +1,20 @@
 const Sequelize = require('sequelize');
+
 const dbConnection = new Sequelize({
-  dialect : 'sqlite',
-  storage: './database.sqlite'
+  dialect: 'sqlite',
+  storage: './database.sqlite',
 });
 
 dbConnection.authenticate().then(() => {
   console.log('Connection has been established');
-}).catch(err => {
+}).catch(() => {
   console.log('Failed to connect to DB');
 });
 
 const site = require('../models/sites');
 
-var dbSite = site(dbConnection);
+const dbSite = site(dbConnection);
 
 module.exports = {
-  site: dbSite
-}
+  site: dbSite,
+};

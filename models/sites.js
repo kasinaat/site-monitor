@@ -1,25 +1,25 @@
-const { Sequelize } = require("sequelize");
+/* eslint-disable indent */
+const { Sequelize } = require('sequelize');
 
-module.exports = function (sequelize) {
-
-    var Model = sequelize.define(
+module.exports = (sequelize) => {
+    const Model = sequelize.define(
         'sites',
         {
             siteId: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
-                primaryKey: true
+                primaryKey: true,
             },
             title: {
                 type: Sequelize.STRING,
-                unique: true
+                unique: true,
             },
             url: Sequelize.STRING,
-            interval: Sequelize.INTEGER
+            interval: Sequelize.INTEGER,
         },
         {
-            timestamps: false
-        }
+            timestamps: false,
+        },
     );
     sequelize.sync();
     return Model;

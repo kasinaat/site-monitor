@@ -1,14 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var loggers = require("./utils/logger-util");
-var indexRouter = require('./routes/index');
-var sitesRouter = require('./routes/sites');
+const createError = require('http-errors');
 
-var app = express();
+const express = require('express');
+
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const indexRouter = require('./routes/index');
+const loggers = require('./utils/logger-util');
+const sitesRouter = require('./routes/sites');
+
+const app = express();
 loggers.initLoggers();
-loggers.getLogger('general').info("Loggers initiated successfully");
+loggers.getLogger('general').info('Loggers initiated successfully');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -22,12 +24,12 @@ app.use('/', indexRouter);
 app.use('/sites', sitesRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
