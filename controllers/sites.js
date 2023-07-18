@@ -46,9 +46,42 @@ function remove(request, response) {
             siteId,
         },
     });
-    logger.getLogger('general').info(`Site Monitoring removed. SiteID: ${siteId}`, siteId);
+    logger.getLogger('general').info(`Site Monitoring removed. SiteID: ${siteId}`);
     response.send({ error: false, message: 'Site Removed Successfully' });
+}
+
+function modify(request, response) {
+    const { siteId } = request.params;
+    const { title } = request.body;
+    const { url } = request.body;
+    const { interval } = request.body;
+    site.findAll({
+        where: {
+            siteId,
+        },
+    }).then((result) => {
+        if (result.length > 0) {
+            site.update(
+                {
+                    title,
+                    url,
+                    interval,
+                },
+                {
+                    where: {
+                        siteId,
+                    },
+                },
+            ).then(() => {
+                logger.getLogger('general').info(`Site details updated. SiteID: ${siteId}, title: ${title}, url: ${url}, interval: ${interval}`);
+                response.send({ error: false, message: 'Site details updated successfully' });
+            });
+        } else {
+            response.send({ error: true, message: `No site found for given identifier ${siteId}` });
+        }
+    });
 }
 module.exports.create = create;
 module.exports.get = get;
 module.exports.remove = remove;
+module.exports.modify = modify;
