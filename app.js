@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const indexRouter = require('./routes/index');
 const loggers = require('./utils/logger-util');
 const sitesRouter = require('./routes/sites');
+const cronUtil = require('./utils/cron-util');
 
 const app = express();
 loggers.initLoggers();
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/sites', sitesRouter);
+cronUtil.initializeAllSchedules();
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

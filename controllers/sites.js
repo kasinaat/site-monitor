@@ -33,7 +33,7 @@ function create(request, response) {
 }
 
 function get(request, response) {
-    logger.getLogger('general').info('API Called: Get All Sites');
+    logger.getLogger('general').info('API Called: GetAllSites');
     site.findAll().then((sites) => {
         response.send({ error: false, message: 'Sites list', data: sites });
     });
