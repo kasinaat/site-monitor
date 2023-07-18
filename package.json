@@ -16,9 +16,9 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
+    "mysql2": "^3.5.2",
     "node-cron": "^3.0.2",
     "sequelize": "^6.32.1",
-    "sqlite3": "^5.1.6",
     "winston": "^3.10.0"
   },
   "devDependencies": {
