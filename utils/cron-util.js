@@ -13,7 +13,7 @@ function initializeAllSchedules() {
     site.findAll().then((sites) => {
         sites.forEach((item) => {
             logger.getLogger('general').info(`Initializing cron schedule job for siteID: ${item.siteId}`);
-            cron.schedule(`*/${item.interval} * * * * *`, () => {
+            cron.schedule(`*/${item.interval} * * * *`, () => {
                 pingUrl(item.url).then(() => {
                     logger.getLogger('general').info(`Site ${item.url} is up and running`);
                 }).catch(() => {
