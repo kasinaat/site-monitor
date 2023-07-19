@@ -1,8 +1,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable indent */
+const cron = require('node-cron');
 const dbConnection = require('./database');
-
-// const nodeCron = require('node-cron');
 
 const logger = require('./logger-util');
 
@@ -12,7 +11,10 @@ function initializeAllSchedules() {
     logger.getLogger('general').info('Initializing all cron jobs');
     site.findAll().then((sites) => {
         sites.forEach((item) => {
-            console.log(item);
+            logger.getLogger('general').info(`Initializing cron schedule job for siteID: ${item.siteId}`);
+            cron.schedule(`*/${item.interval} * * * * *`, () => {
+                console.log(item.siteId);
+            });
         });
     });
 }
