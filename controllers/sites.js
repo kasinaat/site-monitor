@@ -1,5 +1,6 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable indent */
+const { scheduleCronJob, destroyCronJob } = require('../utils/cron-util');
 const dbConnection = require('../utils/database');
 
 const logger = require('../utils/logger-util');
@@ -25,6 +26,7 @@ function create(request, response) {
                 url,
                 interval,
             }).then(() => {
+                scheduleCronJob({ title, url, interval });
                 logger.getLogger('general').info(`New Site monitoring created. Title: ${title}, Interval: ${interval}`);
                 response.send({ success: true, message: 'Monitoring for Site Created successfully' });
             });
@@ -41,13 +43,26 @@ function get(request, response) {
 
 function remove(request, response) {
     const { siteId } = request.params;
-    site.destroy({
+
+    site.findAll({
         where: {
             siteId,
         },
+    }).then((sites) => {
+        if (sites.length > 0) {
+            site.destroy({
+                where: {
+                    siteId,
+                },
+            });
+            destroyCronJob(siteId);
+            logger.getLogger('general').info(`Site Monitoring removed. SiteID: ${siteId}`);
+            response.send({ error: false, message: 'Site Removed Successfully' });
+        } else {
+            logger.getLogger('general').info(`Site not present for given SiteID: ${siteId}`);
+            response.send({ error: true, message: 'Invalid Identifier provided' });
+        }
     });
-    logger.getLogger('general').info(`Site Monitoring removed. SiteID: ${siteId}`);
-    response.send({ error: false, message: 'Site Removed Successfully' });
 }
 
 function modify(request, response) {
